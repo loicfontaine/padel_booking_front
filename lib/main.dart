@@ -6,8 +6,13 @@ import 'cubits/auth_state.dart';
 import 'services/auth_service.dart';
 import 'screens/login_screen.dart';
 import 'screens/clubs_screen.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-void main() => runApp(const PadelBookingApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('fr_FR');
+  runApp(const PadelBookingApp());
+}
 
 class PadelBookingApp extends StatelessWidget {
   const PadelBookingApp({super.key});

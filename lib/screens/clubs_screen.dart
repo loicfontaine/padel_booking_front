@@ -1,6 +1,7 @@
 // lib/screens/clubs_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:padel_booking_front/screens/courts_screen.dart';
 import '../cubits/club_cubit.dart';
 import '../cubits/club_state.dart';
 import '../services/club_service.dart';
@@ -30,7 +31,13 @@ class ClubsScreen extends StatelessWidget {
                 title: Text(clubs[index].name),
                 subtitle: Text(clubs[index].address),
                 trailing: Text('${clubs[index].openingTime} - ${clubs[index].closingTime}'),
-
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CourtsScreen(club: clubs[index]),
+                  ),
+                  );
+                },
               ),
             );
           },
