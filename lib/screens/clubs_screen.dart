@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubits/club_cubit.dart';
 import '../cubits/club_state.dart';
 import '../services/club_service.dart';
+import '../widgets/app_header.dart';
 
 class ClubsScreen extends StatelessWidget {
   const ClubsScreen({super.key});
@@ -13,7 +14,7 @@ class ClubsScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => ClubCubit(ClubService())..loadClubs(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Clubs de padel')),
+        appBar: AppHeader(title: 'Clubs de padel'),
         body: BlocBuilder<ClubCubit, ClubState>(
           builder: (context, state) {
             if (state is ClubLoading || state is ClubInitial) {

@@ -25,4 +25,12 @@ class ApiClient {
 
   Future<void> saveToken(String token) => _storage.write(key: 'jwt_token', value: token);
   Future<void> clearToken() => _storage.delete(key: 'jwt_token');
+
+  Future<bool> hasToken() async {
+    return _storage.containsKey(key: 'jwt_token');
+  }
+
+  Future<String?> readToken() async {
+    return _storage.read(key: 'jwt_token');
+  }
 }
