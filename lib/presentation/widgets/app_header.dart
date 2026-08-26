@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:padel_booking_front/cubits/auth_cubit.dart';
 import 'package:padel_booking_front/cubits/auth_state.dart';
 
+import '../screens/bookings_screen.dart';
+
 class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
@@ -28,9 +30,19 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    state.email,
-                    style: const TextStyle(fontSize: 14),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BookingsScreen(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      state.email,
+                      style: const TextStyle(fontSize: 14),
+                    ),
                   ),
                 ),
                 IconButton(

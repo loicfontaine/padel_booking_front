@@ -18,4 +18,14 @@ class BookingCubit extends Cubit<BookingState> {
       emit(BookingError(e.toString()));
     }
   }
+
+  Future<void> loadUserBookings() async {
+    emit(BookingLoading());
+    try {
+      final bookings = await _bookingService.getUserBookings();
+      emit(BookingLoaded(bookings));
+    } catch (e) {
+      emit(BookingError(e.toString()));
+    }
+  }
 }
