@@ -14,6 +14,7 @@ class CourtCubit extends Cubit<CourtState> {
       final clubs = await _courtService.getAllCourtsByClub(clubId);
       emit(CourtLoaded(clubs));
     } catch (e) {
+      if (isClosed) return;
       emit(CourtError(e.toString()));
     }
   }

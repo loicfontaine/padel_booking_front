@@ -1,22 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:padel_booking_front/widgets/slot_tile.dart';
-import '../cubits/slot_cubit.dart';
-import '../cubits/slot_state.dart';
-import '../models/court.dart';
-import '../models/slot.dart';
-import '../services/slot_service.dart';
+import 'package:padel_booking_front/cubits/slot_cubit.dart';
+import 'package:padel_booking_front/cubits/slot_state.dart';
+import 'package:padel_booking_front/models/court.dart';
+import 'package:padel_booking_front/presentation/widgets/slot_tile.dart';
+import 'package:padel_booking_front/services/slot_service.dart';
 
 class CourtAccordion extends StatefulWidget {
   final Court court;
   final DateTime date;
 
-  const CourtAccordion({
-    super.key,
-    required this.court,
-    required this.date,
-  });
+  const CourtAccordion({super.key, required this.court, required this.date});
 
   @override
   State<CourtAccordion> createState() => _CourtAccordionState();
@@ -30,10 +24,7 @@ class _CourtAccordionState extends State<CourtAccordion> {
     super.initState();
 
     _slotCubit = SlotCubit(SlotService())
-      ..loadSlotsByCourt(
-        widget.court.id,
-        widget.date,
-      );
+      ..loadSlotsByCourt(widget.court.id, widget.date);
   }
 
   @override
@@ -42,10 +33,7 @@ class _CourtAccordionState extends State<CourtAccordion> {
 
     // La date a changé
     if (oldWidget.date != widget.date) {
-      _slotCubit.loadSlotsByCourt(
-        widget.court.id,
-        widget.date,
-      );
+      _slotCubit.loadSlotsByCourt(widget.court.id, widget.date);
     }
   }
 
@@ -65,8 +53,7 @@ class _CourtAccordionState extends State<CourtAccordion> {
           children: [
             BlocBuilder<SlotCubit, SlotState>(
               builder: (context, state) {
-                if (state is SlotLoading ||
-                    state is SlotInitial) {
+                if (state is SlotLoading || state is SlotInitial) {
                   return const Padding(
                     padding: EdgeInsets.all(16),
                     child: CircularProgressIndicator(),
@@ -76,9 +63,7 @@ class _CourtAccordionState extends State<CourtAccordion> {
                 if (state is SlotError) {
                   return Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Text(
-                      'Erreur : ${state.message}',
-                    ),
+                    child: Text('Erreur : ${state.message}'),
                   );
                 }
 
@@ -87,9 +72,7 @@ class _CourtAccordionState extends State<CourtAccordion> {
                 if (slots.isEmpty) {
                   return const Padding(
                     padding: EdgeInsets.all(16),
-                    child: Text(
-                      'Aucun créneau disponible.',
-                    ),
+                    child: Text('Aucun créneau disponible.'),
                   );
                 }
 

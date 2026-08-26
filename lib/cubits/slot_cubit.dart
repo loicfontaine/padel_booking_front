@@ -1,5 +1,6 @@
 // lib/cubits/club_cubit.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../services/slot_service.dart';
 import 'slot_state.dart';
 

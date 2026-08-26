@@ -1,12 +1,12 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
 import 'cubits/auth_cubit.dart';
 import 'cubits/auth_state.dart';
+import 'presentation/screens/clubs_screen.dart';
+import 'presentation/screens/login_screen.dart';
 import 'services/auth_service.dart';
-import 'screens/login_screen.dart';
-import 'screens/clubs_screen.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +26,7 @@ class PadelBookingApp extends StatelessWidget {
         theme: ThemeData(primarySwatch: Colors.green),
         home: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
+            print('AUTH STATE: ${state.runtimeType}');
             if (state is AuthInitial || state is AuthLoading) {
               return const Scaffold(
                 body: Center(child: CircularProgressIndicator()),

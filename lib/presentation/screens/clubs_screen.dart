@@ -1,10 +1,11 @@
 // lib/screens/clubs_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:padel_booking_front/screens/courts_screen.dart';
-import '../cubits/club_cubit.dart';
-import '../cubits/club_state.dart';
-import '../services/club_service.dart';
+import 'package:padel_booking_front/cubits/club_cubit.dart';
+import 'package:padel_booking_front/cubits/club_state.dart';
+import 'package:padel_booking_front/presentation/screens/courts_screen.dart';
+import 'package:padel_booking_front/services/club_service.dart';
+
 import '../widgets/app_header.dart';
 
 class ClubsScreen extends StatelessWidget {
@@ -30,12 +31,15 @@ class ClubsScreen extends StatelessWidget {
               itemBuilder: (context, index) => ListTile(
                 title: Text(clubs[index].name),
                 subtitle: Text(clubs[index].address),
-                trailing: Text('${clubs[index].openingTime} - ${clubs[index].closingTime}'),
+                trailing: Text(
+                  '${clubs[index].openingTime} - ${clubs[index].closingTime}',
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CourtsScreen(club: clubs[index]),
-                  ),
+                    MaterialPageRoute(
+                      builder: (context) => CourtsScreen(club: clubs[index]),
+                    ),
                   );
                 },
               ),

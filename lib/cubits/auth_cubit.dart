@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:padel_booking_front/services/api_client.dart';
 import 'package:padel_booking_front/services/auth_service.dart';
-import 'package:padel_booking_front/services/api_client.dart';
 import 'auth_state.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
@@ -47,6 +46,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> logout() async {
     await _apiClient.clearToken();
+    print('EMIT UNAUTHENTICATED');
     emit(Unauthenticated());
   }
 

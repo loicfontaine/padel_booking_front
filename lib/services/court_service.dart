@@ -1,4 +1,3 @@
-// lib/services/club_service.dart
 import '../models/court.dart';
 import 'api_client.dart';
 

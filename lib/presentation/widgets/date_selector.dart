@@ -17,16 +17,9 @@ class MyDateSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateFormatter = DateFormat(
-      'EEEE d MMMM',
-      'fr_FR',
-    );
-
+    final dateFormatter = DateFormat('EEEE d MMMM', 'fr_FR');
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 12,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
           IconButton(

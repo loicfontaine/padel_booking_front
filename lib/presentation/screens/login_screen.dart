@@ -1,9 +1,9 @@
 // lib/screens/login_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:padel_booking_front/widgets/app_header.dart';
-import '../cubits/auth_cubit.dart';
-import '../cubits/auth_state.dart';
+import 'package:padel_booking_front/cubits/auth_cubit.dart';
+import 'package:padel_booking_front/cubits/auth_state.dart';
+import 'package:padel_booking_front/presentation/widgets/app_header.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,9 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
         builder: (context, state) {

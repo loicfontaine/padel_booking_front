@@ -1,17 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-
-import '../models/slot.dart';
+import 'package:padel_booking_front/cubits/booking_cubit.dart';
+import 'package:padel_booking_front/models/slot.dart';
 
 class SlotTile extends StatelessWidget {
   final Slot slot;
 
-  const SlotTile({
-    super.key,
-    required this.slot,
-  });
+  const SlotTile({super.key, required this.slot});
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +20,11 @@ class SlotTile extends StatelessWidget {
       title: Text(
         '${DateFormat('HH:mm').format(slot.slotStart)} - ${DateFormat('HH:mm').format(slot.slotEnd)}',
       ),
-      trailing: Chip(
-        label: Text(
-          available ? 'Libre' : 'Réservé',
-        ),
-      ),
-      onTap: available
-          ? () => _showBookingConfirmation(context)
-          : null,
+      trailing: Chip(label: Text(available ? 'Libre' : 'Réservé')),
+      onTap: available ? () => _showBookingConfirmation(context) : null,
     );
   }
+
   void _showBookingConfirmation(BuildContext context) {
     showDialog(
       context: context,
@@ -42,7 +33,7 @@ class SlotTile extends StatelessWidget {
           title: const Text('Confirmer la réservation'),
           content: Text(
             'Voulez-vous réserver le créneau '
-                '${DateFormat('HH:mm').format(slot.slotStart)} - ${DateFormat('HH:mm').format(slot.slotEnd)} ?',
+            '${DateFormat('HH:mm').format(slot.slotStart)} - ${DateFormat('HH:mm').format(slot.slotEnd)} ?',
           ),
           actions: [
             TextButton(
@@ -56,7 +47,6 @@ class SlotTile extends StatelessWidget {
                 Navigator.of(dialogContext).pop();
 
                 context.read<BookingCubit>().createBooking(slot.id);
-                Navigator.of(dialogContext).pop();
               },
               child: const Text('Réserver'),
             ),

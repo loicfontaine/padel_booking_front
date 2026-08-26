@@ -1,4 +1,3 @@
-
 class Slot {
   final int id;
   final DateTime slotStart;
@@ -9,15 +8,21 @@ class Slot {
     required this.id,
     required this.slotStart,
     required this.slotEnd,
-    required this.booked
-});
+    required this.booked,
+  });
+
   factory Slot.fromJson(Map<String, dynamic> json) {
     final booked;
-    if(json['statut'] == "FREE") {
+    if (json['statut'] == "FREE") {
       booked = false;
     } else {
       booked = true;
     }
-    return Slot(id: json['id'], slotStart: DateTime.parse(json['slotStart']), slotEnd: DateTime.parse(json['slotEnd']), booked: booked);
+    return Slot(
+      id: json['id'],
+      slotStart: DateTime.parse(json['slotStart']),
+      slotEnd: DateTime.parse(json['slotEnd']),
+      booked: booked,
+    );
   }
 }
