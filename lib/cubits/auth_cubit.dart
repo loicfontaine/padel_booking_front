@@ -1,19 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:padel_booking_front/services/api_client.dart';
 import 'package:padel_booking_front/services/auth_service.dart';
-import 'auth_state.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 
+import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthService _authService;
   final ApiClient _apiClient = ApiClient();
 
-  AuthCubit(this._authService): super(AuthInitial());
+  AuthCubit(this._authService) : super(AuthInitial());
 
   Future<void> checkAuthStatus() async {
     final hasToken = await _apiClient.hasToken();
-    if(hasToken) {
+    if (hasToken) {
       final token = await _apiClient.readToken();
       final email = JwtDecoder.decode(token!)['sub'];
       emit(Authenticated(email));
@@ -28,7 +28,7 @@ class AuthCubit extends Cubit<AuthState> {
       final token = await _authService.login(email, password);
       await _apiClient.saveToken(token);
       emit(Authenticated(email));
-    } catch(e) {
+    } catch (e) {
       emit(AuthError('Email ou mot de passe incorrect'));
     }
   }
@@ -46,11 +46,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> logout() async {
     await _apiClient.clearToken();
-    print('EMIT UNAUTHENTICATED');
     emit(Unauthenticated());
   }
-
 }
-
-
-

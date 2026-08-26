@@ -5,6 +5,7 @@ import 'package:padel_booking_front/cubits/auth_cubit.dart';
 import 'package:padel_booking_front/cubits/auth_state.dart';
 
 import '../screens/bookings_screen.dart';
+import '../screens/clubs_screen.dart';
 
 class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -17,7 +18,16 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
       title: Text(title),
       leading: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: FittedBox(child: Image(image: AssetImage('assets/logo.png'))),
+        child: InkWell(
+          onTap: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (_) => const ClubsScreen()),
+              (route) => false,
+            );
+          },
+          child: FittedBox(child: Image.asset('assets/logo.png')),
+        ),
       ),
       actions: [
         BlocBuilder<AuthCubit, AuthState>(
@@ -30,18 +40,26 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BookingsScreen(),
+                          builder: (context) => const BookingsScreen(),
                         ),
                       );
                     },
-                    child: Text(
-                      state.email,
-                      style: const TextStyle(fontSize: 14),
+                    borderRadius: BorderRadius.circular(8),
+                    hoverColor: Colors.grey.withValues(alpha: 0.1),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      child: Text(
+                        state.email,
+                        style: const TextStyle(fontSize: 14),
+                      ),
                     ),
                   ),
                 ),

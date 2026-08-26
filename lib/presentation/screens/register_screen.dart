@@ -1,31 +1,43 @@
-// lib/screens/login_screen.dart
+// lib/screens/register_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:padel_booking_front/cubits/auth_cubit.dart';
 import 'package:padel_booking_front/cubits/auth_state.dart';
-import 'package:padel_booking_front/presentation/screens/register_screen.dart';
 import 'package:padel_booking_front/presentation/widgets/app_header.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppHeader(title: 'Connexion'),
+      appBar: AppHeader(title: 'Inscription'),
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthError) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.message)));
+          }
+
+          if (state is Authenticated) {
+            Navigator.pop(context);
           }
         },
         builder: (context, state) {
@@ -34,6 +46,10 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                TextField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(labelText: 'Nom'),
+                ),
                 TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(labelText: 'Email'),
@@ -49,22 +65,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 else
                   ElevatedButton(
                     onPressed: () {
-                      context.read<AuthCubit>().login(
+                      context.read<AuthCubit>().register(
+                        _nameController.text,
                         _emailController.text,
                         _passwordController.text,
                       );
                     },
-                    child: const Text('Se connecter'),
+                    child: const Text('Créer un compte'),
                   ),
                 const SizedBox(height: 8),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const RegisterScreen()),
-                    );
+                    Navigator.pop(context);
                   },
-                  child: const Text('Créer un compte'),
+                  child: const Text('Déjà un compte ? Se connecter'),
                 ),
               ],
             ),

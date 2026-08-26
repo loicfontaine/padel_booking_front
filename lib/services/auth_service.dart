@@ -12,7 +12,7 @@ class AuthService {
   }
 
   Future<String> register(String name, String email, String password) async {
-    final response = await _dio.get(
+    final response = await _dio.post(
       '/auth/register',
       data: {'name': name, 'email': email, 'password': password},
     );
